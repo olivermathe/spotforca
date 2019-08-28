@@ -1,17 +1,47 @@
 const Hapi = require('hapi');
+const Inert = require('@hapi/inert');
+const Vision = require('@hapi/vision');
+const HapiSwagger = require('hapi-swagger');
+const Pack = require('./package');
 
 const routes = require('./src/routes');
 
-const server = Hapi.server({
-  port: 3000
-});
+async function ServerStart() {
 
-routes.forEach(route => {
+  const server = Hapi.server({
+    port: 3000
+  });
 
-  console.log(route.method, route.path, `(${route.options.description})`);
+  routes.forEach(route => {
 
-  server.route(route);
+    route.options.tags = ['api'];
 
-});
+    server.route(route);
 
-server.start();
+  });
+
+  const swaggerOptions = {
+    info: {
+      title: 'Test API Documentation',
+      version: Pack.version,
+    },
+  };
+
+  await server.register([
+    Inert,
+    Vision,
+    {
+      plugin: HapiSwagger,
+      options: swaggerOptions
+    }
+  ]);
+
+  try {
+    await server.start();    
+  } catch (error) {
+    console.error(error);
+  }
+
+}
+
+ServerStart();
