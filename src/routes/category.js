@@ -1,19 +1,10 @@
-const { categories, words } = require('../mocks');
-const { getRandomInt } = require('../shared/utils');
-
-function findCategory(id) {
-  return categories.find(category => category.id == id);
-}
+const { categoryHandler } = require('../handlers');
 
 module.exports = [
   {
     path: '/category',
     method: 'GET',
-    handler(request, h) {
-
-      return categories;
-
-    },
+    handler: categoryHandler.getAllCategories,
     options: {
       description: 'retorna todas categorias',
     }
@@ -21,17 +12,7 @@ module.exports = [
   {
     path: '/category/{id}/word/random',
     method: 'GET',
-    handler(request, h) {
-
-      const wordsCategory = words.filter(word => word.categoryId == request.params.id);
-
-      const randomIndex = getRandomInt(0 , wordsCategory.length -1);
-
-      const word = wordsCategory[randomIndex];
-
-      return word;
-
-    },
+    handler: categoryHandler.getRandomCategoryWord,
     options: {
       description: 'retorna randomicamente uma plavra de uma categoria',
     },
@@ -39,20 +20,7 @@ module.exports = [
   {
     path: '/category',
     method: 'PUT',
-    handler(request, h) {
-
-      const payload = request.payload;
-
-      const newCategory = {
-        id: getRandomInt(1, 100),
-        name: payload.name,
-      };
-
-      categories.push(newCategory);
-
-      return newCategory;
-
-    },
+    handler: categoryHandler.createNewCategory,
     options: {
       description: 'adiciona uma nova categoria',
     }
