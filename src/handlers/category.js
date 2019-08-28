@@ -20,6 +20,9 @@ exports.getRandomCategoryWord = (request, h) => {
 
   const wordsCategory = words.filter(word => word.categoryId == request.params.id);
 
+  if (wordsCategory.length === 0)
+    return {};
+
   const randomIndex = getRandomInt(0 , wordsCategory.length -1);
 
   const word = wordsCategory[randomIndex];
