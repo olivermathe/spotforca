@@ -3,31 +3,51 @@ const { getRandomInt } = require('../shared/utils');
 
 exports.createNewCategory = (request, h) => {
 
-  const payload = request.payload;
+  try {
 
-  const newCategory = {
-    id: getRandomInt(1, 100),
-    name: payload.name,
-  };
+    const payload = request.payload;
 
-  categories.push(newCategory);
+    const newCategory = {
+      id: getRandomInt(1, 100),
+      name: payload.name,
+    };
 
-  return newCategory;
+    categories.push(newCategory);
+
+    return newCategory;
+
+  } catch (error) {
+
+    console.error(error);
+
+    throw error;
+
+  }
 
 };
 
 exports.getRandomCategoryWord = (request, h) => {
 
-  const wordsCategory = words.filter(word => word.categoryId == request.params.id);
+  try {
+    
+    const wordsCategory = words.filter(word => word.categoryId == request.params.id);
 
-  if (wordsCategory.length === 0)
-    return {};
+    if (wordsCategory.length === 0)
+      return {};
 
-  const randomIndex = getRandomInt(0 , wordsCategory.length -1);
+    const randomIndex = getRandomInt(0 , wordsCategory.length -1);
 
-  const word = wordsCategory[randomIndex];
+    const word = wordsCategory[randomIndex];
 
-  return word;
+    return word;
+
+  } catch (error) {
+
+    console.error(error);
+
+    throw error;
+
+  }
 
 };
 

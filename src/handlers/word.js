@@ -3,21 +3,30 @@ const { getRandomInt } = require('../shared/utils')
 
 exports.createNewWord = (request, h) => {
 
-  const payload = request.payload;
+  try {
 
-  const categoryIdx = categories.findIndex(category => category.id == payload.categoryId);
+    const payload = request.payload;
 
-  if (categoryIdx === -1)
-    throw new Error(`Category ${payload.categoryId} not found`);
+    const categoryIdx = categories.findIndex(category => category.id == payload.categoryId);
 
-  const newWord = {
-    id: getRandomInt(1, 100),
-    name: payload.name,
-    categoryId: payload.categoryId
-  };
+    if (categoryIdx === -1)
+      throw new Error(`Category ${payload.categoryId} not found`);
 
-  words.push(newWord);
+    const newWord = {
+      id: getRandomInt(1, 100),
+      name: payload.name,
+      categoryId: payload.categoryId
+    };
 
-  return newWord;
+    words.push(newWord);
+
+    return newWord;
+
+  } catch (error) {
+
+    console.error(error);
+
+    throw error;
+  }
 
 }
