@@ -39,7 +39,10 @@ exports.getRandomCategoryWord = (request, h) => {
 
     const word = wordsCategory[randomIndex];
 
-    return word;
+    return {
+      length: word.length,
+      id: word.id
+    };
 
   } catch (error) {
 
