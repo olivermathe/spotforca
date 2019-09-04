@@ -30,3 +30,28 @@ exports.createNewWord = (request, h) => {
   }
 
 }
+
+exports.checkIfHasLetter = (request, h) => {
+
+  const wordId = request.params.id;
+  const payload = request.payload;
+
+  const word = words.find(({ id }) => id == wordId);
+
+  if(!word)
+    throw new Error("Id inválido");
+
+  const letters = word.name.split('');
+
+  const hasLetter = [];
+  
+  letters.forEach((letter, idx) => {
+
+    if(letter.toLowerCase() === payload.letter.toLowerCase())
+      return hasLetter.push(idx);
+
+  });
+
+  return hasLetter;
+
+}

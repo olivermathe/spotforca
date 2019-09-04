@@ -23,5 +23,21 @@ module.exports = [
         }).label('RES-PUT-word'),
       }
     }
+  },
+  {
+    path: '/word/{id}/check',
+    method: 'POST',
+    handler: wordHandler.checkIfHasLetter,
+    options: {
+      description: 'verifica se palavra possui letra',
+      validate: {
+        params: Joi.object({
+          id: Joi.number().positive().example(22).required()
+        }),
+        payload: Joi.object({
+          letter: Joi.string().length(1).example('a').required()
+        }).label('POST-word-id-check'),
+      },
+    }
   }
 ];
