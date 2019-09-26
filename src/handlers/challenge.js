@@ -5,14 +5,16 @@ exports.getRandomChallenge = (request, h) => {
 
   try {
 
-    const randomIndex = getRandomInt(0 , challenges.length -1);
+    const randomIndex = getRandomInt(0, challenges.length - 1);
 
     const challenge = challenges[randomIndex];
+
+    challenge.answers = challenge.answers.map(({ id, value }) => ({ id, value }))
 
     return challenge;
 
   } catch (error) {
-    
+
     console.error(error);
 
     throw error;

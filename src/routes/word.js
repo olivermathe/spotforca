@@ -4,39 +4,39 @@ const { wordHandler } = require('../handlers');
 
 module.exports = [
   {
-    path: '/word',
-    method: 'PUT',
+    path: '/words',
+    method: 'POST',
     handler: wordHandler.createNewWord,
     options: {
       description: 'adiciona uma nova palavra',
       validate: {
         payload: Joi.object({
           name: Joi.string().example('teste').required(),
-          catagoryId: Joi.number().positive().example(12).required()
-        }).label('PUT-word'),
+          catagoryId: Joi.number().integer().positive().example(12).required()
+        }).label('POST-word'),
       },
       response: {
         schema: Joi.object({
-          id: Joi.number().positive().example(23),
+          id: Joi.number().integer().positive().example(23),
           name: Joi.string().example('teste'),
           catagoryId: Joi.number().positive().example(12)
-        }).label('RES-PUT-word'),
+        }).label('RES-POST-word'),
       }
     }
   },
   {
-    path: '/word/{id}/check',
-    method: 'POST',
+    path: '/words/{id}/check',
+    method: 'PUT',
     handler: wordHandler.checkIfHasLetter,
     options: {
       description: 'verifica se palavra possui letra',
       validate: {
         params: Joi.object({
-          id: Joi.number().positive().example(22).required()
-        }),
+          id: Joi.number().integer().positive().example(22).required()
+        }).label('PARAM-POST-word-check'),
         payload: Joi.object({
-          letter: Joi.string().length(1).example('a').required()
-        }).label('POST-word-id-check'),
+          letter: Joi.string().regex(/[a-zA-Z]/).length(1).example('a').required()
+        }).label('POST-word-check'),
       },
     }
   }

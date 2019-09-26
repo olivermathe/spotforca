@@ -29,18 +29,18 @@ exports.createNewCategory = (request, h) => {
 exports.getRandomCategoryWord = (request, h) => {
 
   try {
-    
+
     const wordsCategory = words.filter(word => word.categoryId == request.params.id);
 
     if (wordsCategory.length === 0)
       return {};
 
-    const randomIndex = getRandomInt(0 , wordsCategory.length -1);
+    const randomIndex = getRandomInt(0, wordsCategory.length - 1);
 
     const word = wordsCategory[randomIndex];
 
     return {
-      length: word.length,
+      length: word.name.length,
       id: word.id
     };
 
