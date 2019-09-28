@@ -1,5 +1,6 @@
 module.exports = {
   categoryHandler: require('./category'),
   wordHandler: require('./word'),
-  challengeHandler: require('./challenge')
+  challengeHandler: require('./challenge'),
+  roundHandler: require('./round')
 }

@@ -38,6 +38,9 @@ module.exports = [
           letter: Joi.string().regex(/[a-zA-Z]/).length(1).example('a').required()
         }).label('POST-word-check'),
       },
+      response: {
+        schema: Joi.array().items(Joi.number().integer().positive().allow(0)).label('RES-POST-word-check')
+      }
     }
   }
 ];

@@ -1,4 +1,4 @@
-const { words, categories } = require('../mocks');
+const { words, categories, rounds } = require('../mocks');
 const { getRandomInt } = require('../shared/utils')
 
 exports.createNewWord = (request, h) => {
@@ -38,16 +38,16 @@ exports.checkIfHasLetter = (request, h) => {
 
   const word = words.find(({ id }) => id == wordId);
 
-  if(!word)
+  if (!word)
     throw new Error("Id inválido");
 
   const letters = word.name.split('');
 
   const hasLetter = [];
-  
+
   letters.forEach((letter, idx) => {
 
-    if(letter.toLowerCase() === payload.letter.toLowerCase())
+    if (letter.toLowerCase() === payload.letter.toLowerCase())
       return hasLetter.push(idx);
 
   });

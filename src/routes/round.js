@@ -1,10 +1,12 @@
 const Joi = require('@hapi/joi');
 
+const { roundHandler } = require('../handlers')
+
 module.exports = [
   {
     path: '/rounds',
     method: 'POST',
-    handler: () => { },
+    handler: roundHandler.startNewRound,
     options: {
       description: 'inicia uma nova rodada',
       validate: {
@@ -22,14 +24,13 @@ module.exports = [
   {
     path: '/rounds',
     method: 'GET',
-    handler: () => { },
+    handler: roundHandler.getRoundsRank,
     options: {
       description: 'retorna as 5 melhores rodadas',
       response: {
         schema: Joi.array().items(Joi.object({
-          id: Joi.number().integer().positive().example(34),
           nickname: Joi.string().regex(/[a-zA-Z0-9]/).max(20).example('ful4n0'),
-          score: Joi.number().integer().positive().example(4000)
+          score: Joi.number().integer().positive().example(4000),
         }).label('ITEM-RES-GET-rounds')).max(5).label('RES-GET-rounds')
       }
     }
