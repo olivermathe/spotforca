@@ -1,5 +1,7 @@
 const Joi = require('@hapi/joi');
 
+const { validateAuthorization } = require('../middlewares');
+
 const { wordHandler } = require('../handlers');
 
 module.exports = [
