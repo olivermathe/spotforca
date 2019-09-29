@@ -8,6 +8,9 @@ module.exports = [
     method: 'GET',
     handler: categoryHandler.getAllCategories,
     options: {
+      cors: {
+        origin: ['*']
+      },
       description: 'retorna todas categorias',
       response: {
         schema: Joi.array().items(Joi.object({

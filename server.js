@@ -9,7 +9,7 @@ const routes = require('./src/routes');
 async function ServerStart() {
 
   const server = Hapi.server({
-    port: process.env.PORT || 3000
+    port: process.env.PORT || 3000,
   });
 
   routes.forEach(route => {
@@ -37,7 +37,7 @@ async function ServerStart() {
   ]);
 
   try {
-    await server.start();    
+    await server.start();
   } catch (error) {
     console.error(error);
   }
