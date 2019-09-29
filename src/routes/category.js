@@ -1,5 +1,7 @@
 const Joi = require('@hapi/joi');
 
+const { validateAuthorization } = require('../middlewares');
+
 const { categoryHandler } = require('../handlers');
 
 module.exports = [
@@ -43,10 +45,17 @@ module.exports = [
     options: {
       description: 'adiciona uma nova categoria',
       validate: {
+        headers: {
+          authorization: Joi.string().max(60).required().example('sj21j-sdknas-223md-n2jn32')
+        },
+        options: {
+          allowUnknown: true
+        },
         payload: Joi.object({
           name: Joi.string().required().example('terror'),
         }).label('RES-POST-categories'),
       },
+      pre: [validateAuthorization]
     }
   }
 ];

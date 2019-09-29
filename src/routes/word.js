@@ -10,6 +10,12 @@ module.exports = [
     options: {
       description: 'adiciona uma nova palavra',
       validate: {
+        headers: {
+          authorization: Joi.string().max(60).required().example('sj21j-sdknas-223md-n2jn32')
+        },
+        options: {
+          allowUnknown: true
+        },
         payload: Joi.object({
           name: Joi.string().example('teste').required(),
           catagoryId: Joi.number().integer().positive().example(12).required()
@@ -21,7 +27,8 @@ module.exports = [
           name: Joi.string().example('teste'),
           catagoryId: Joi.number().positive().example(12)
         }).label('RES-POST-word'),
-      }
+      },
+      pre: [validateAuthorization]
     }
   },
   {

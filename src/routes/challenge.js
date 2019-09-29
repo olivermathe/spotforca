@@ -55,6 +55,12 @@ module.exports = [
     options: {
       description: 'adiciona um novo desafio',
       validate: {
+        headers: {
+          authorization: Joi.string().max(60).required().example('sj21j-sdknas-223md-n2jn32')
+        },
+        options: {
+          allowUnknown: true
+        },
         payload: Joi.object({
           value: Joi.string().required().example('Isso é uma pergunta?'),
           answers: Joi.array().items(Joi.object({
@@ -73,7 +79,8 @@ module.exports = [
             right: Joi.boolean().example(false)
           }).label('ANSWER-RES-POST-challenges')).length(3).label('ANSWERS-RES-POST-challenges')
         }).label('RES-POST-challenges')
-      }
+      },
+      pre: [validateAuthorization]
     }
   }
 ];
