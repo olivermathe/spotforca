@@ -33,25 +33,35 @@ exports.createNewWord = (request, h) => {
 
 exports.checkIfHasLetter = (request, h) => {
 
-  const wordId = request.params.id;
-  const payload = request.payload;
+  try {
 
-  const word = words.find(({ id }) => id == wordId);
+    const wordId = request.params.id;
+    const payload = request.payload;
 
-  if (!word)
-    throw new Error("Id inválido");
+    const word = words.find(({ id }) => id == wordId);
 
-  const letters = word.name.split('');
+    if (!word)
+      throw new Error("Id inválido");
 
-  const hasLetter = [];
+    const letters = word.name.split('');
 
-  letters.forEach((letter, idx) => {
+    const hasLetter = [];
 
-    if (letter.toLowerCase() === payload.letter.toLowerCase())
-      return hasLetter.push(idx);
+    letters.forEach((letter, idx) => {
 
-  });
+      if (letter.toLowerCase() === payload.letter.toLowerCase())
+        return hasLetter.push(idx);
 
-  return hasLetter;
+    });
+
+    return hasLetter;
+
+  } catch (error) {
+
+    console.error(error);
+
+    throw error;
+
+  }
 
 }
