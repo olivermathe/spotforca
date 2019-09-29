@@ -17,7 +17,8 @@ async function ServerStart() {
     route.options.tags = ['api'];
 
     route.options.cors = {
-      origin: ['*']
+      origin: ['*'],
+      headers: ['hash']
     };
 
     server.route(route);
