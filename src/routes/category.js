@@ -33,7 +33,7 @@ module.exports = [
           id: Joi.number().integer().positive().example(23),
           length: Joi.number().integer().positive().example(5),
         }).label('RES-GET-categories-words-random'),
-      }
+      },
     },
   },
   {
@@ -46,7 +46,7 @@ module.exports = [
         payload: Joi.object({
           name: Joi.string().required().example('terror'),
         }).label('RES-POST-categories'),
-      }
+      },
     }
   }
 ];

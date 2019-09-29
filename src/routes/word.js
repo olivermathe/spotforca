@@ -31,6 +31,12 @@ module.exports = [
     options: {
       description: 'verifica se palavra possui letra',
       validate: {
+        headers: {
+          hash: Joi.string().max(60).required().example('sj21j-sdknas-223md-n2jn32')
+        },
+        options: {
+          allowUnknown: true
+        },
         params: Joi.object({
           id: Joi.number().integer().positive().example(22).required()
         }).label('PARAM-POST-word-check'),
