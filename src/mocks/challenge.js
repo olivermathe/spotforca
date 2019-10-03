@@ -4,18 +4,13 @@ module.exports = [
     value: 'Em que ano foi lançado o albun Chalala de Fulano?',
     answers: [
       {
-        id: 3,
-        value: '1997',
-        right: false
-      },
-      {
         id: 5,
-        value: '2000',
+        value: 'sim',
         right: false
       },
       {
         id: 8,
-        value: '2003',
+        value: 'não',
         right: true
       }
     ]
@@ -25,18 +20,13 @@ module.exports = [
     value: 'Qual o ultimo albun de Fulano?',
     answers: [
       {
-        id: 10,
-        value: 'Chalele',
-        right: false
-      },
-      {
         id: 22,
-        value: 'tuti-tuti queru ve',
+        value: 'sim',
         right: false
       },
       {
         id: 47,
-        value: 'sextou',
+        value: 'não',
         right: true
       }
     ]

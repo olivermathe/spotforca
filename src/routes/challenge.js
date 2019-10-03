@@ -22,7 +22,7 @@ module.exports = [
           id: Joi.number().integer().positive().example(22).required()
         }).label('PARAM-POST-challenges-check'),
         payload: Joi.object({
-          answerId: Joi.number().integer().positive().required().example(3)
+          answerId: Joi.number().integer().positive().required().example(2)
         }).label('POST-challenges-check')
       },
       response: {
@@ -45,7 +45,7 @@ module.exports = [
           answers: Joi.array().items(Joi.object({
             id: Joi.number().integer().positive().example(1),
             value: Joi.string().example('Sim'),
-          }).label('ANSWER-RES-GET-challenges-random')).length(3).label('ANSWERS-RES-GET-challenges-random')
+          }).label('ANSWER-RES-GET-challenges-random')).length(2).label('ANSWERS-RES-GET-challenges-random')
         }).label('RES-GET-challenges-random')
       }
     },
@@ -79,7 +79,7 @@ module.exports = [
             id: Joi.number().integer().positive().example(1),
             value: Joi.string().example('Sim'),
             right: Joi.boolean().example(false)
-          }).label('ANSWER-RES-POST-challenges')).length(3).label('ANSWERS-RES-POST-challenges')
+          }).label('ANSWER-RES-POST-challenges')).length(2).label('ANSWERS-RES-POST-challenges')
         }).label('RES-POST-challenges')
       },
       pre: [validateAuthorization]
