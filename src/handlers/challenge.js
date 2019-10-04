@@ -1,17 +1,18 @@
+const { challengeModel, answerModel } = require('../models');
 let { challenges } = require('../mocks');
 const { getRandomInt } = require('../shared/utils');
 
-exports.getRandomChallenge = (request, h) => {
+exports.getRandomChallenge = async (request, h) => {
 
   try {
 
-    challenges = require('../mocks/challenge');
+    challenges = await challengeModel.findAll();
 
     const randomIndex = getRandomInt(0, challenges.length - 1);
 
     let challenge = challenges[randomIndex];
 
-    challenge.answers = challenge.answers.map(({ id, value }) => ({ id, value }))
+    challenge.answers = await answerModel.findByChallenge(challenge.id);
 
     return challenge;
 
@@ -25,35 +26,27 @@ exports.getRandomChallenge = (request, h) => {
 
 };
 
-exports.createNewChallenge = (request, h) => {
+exports.createNewChallenge = async (request, h) => {
 
   try {
 
     const payload = request.payload;
 
-    const newChallenge = {
-      id: getRandomInt(1, 100),
-      value: payload.value,
-      answers: [
-        {
-          id: getRandomInt(1, 100),
-          value: payload.answers[0].value,
-          right: payload.answers[0].right || false,
-        },
-        {
-          id: getRandomInt(1, 100),
-          value: payload.answers[1].value,
-          right: payload.answers[1].right || false,
-        },
-        {
-          id: getRandomInt(1, 100),
-          value: payload.answers[2].value,
-          right: payload.answers[2].right || false,
-        }
-      ]
-    };
+    const challengeId = await challengeModel.create(payload.value);
 
-    challenges.push(newChallenge);
+    const newChallenge = {
+      id: challengeId,
+      value: payload.value,
+      answers: []
+    }
+      
+    for (const answer of payload.answers) {
+      
+      answer.id = await answerModel.create(answer.value, answer.right || false, challengeId);
+
+      newChallenge.answers.push(answer);
+
+    }
 
     return newChallenge;
 
@@ -67,24 +60,13 @@ exports.createNewChallenge = (request, h) => {
 
 };
 
-exports.checkAnswer = (request, h) => {
+exports.checkAnswer = async (request, h) => {
 
   try {
-    
-    const challengeId = request.params.id;
-    const answerId = request.payload.answerId;
 
-    const challenge = challenges.find(c => c.id === challengeId);
+    const answer = await answerModel.findOne(request.payload.answerId)
 
-    if (!challenge)
-      throw new Error('Challenge not found');
-
-    const answer = challenge.answers.find(a => a.id === answerId);
-
-    if (!answer)
-      throw new Error('Answer not found')
-
-    const response = { right: answer.right };
+    const response = { right: !!answer.right };
 
     return response;
 

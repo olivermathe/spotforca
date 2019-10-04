@@ -68,7 +68,7 @@ module.exports = [
           answers: Joi.array().items(Joi.object({
             right: Joi.boolean().required().example(true),
             value: Joi.string().required().example('Sim'),
-          }).label('ANSWER-POST-challenges')).length(3).label('ANSWERS-POST-challenges')
+          }).label('ANSWER-POST-challenges')).length(2).label('ANSWERS-POST-challenges')
         }).label('POST-challenges')
       },
       response: {

@@ -1,4 +1,6 @@
 module.exports = {
     categoryModel: require('./category'),
-    wordModel: require('./word')
+    wordModel: require('./word'),
+    challengeModel: require('./challenge'),
+    answerModel: require('./answer')
 }
