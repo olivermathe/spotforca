@@ -3,6 +3,7 @@ const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
 const HapiSwagger = require('hapi-swagger');
 const Pack = require('./package');
+const mysql = require('mysql');
 
 const routes = require('./src/routes');
 
@@ -42,10 +43,33 @@ async function ServerStart() {
   ]);
 
   try {
+    await DatabaseStart();
     await server.start();
   } catch (error) {
     console.error(error);
   }
+
+}
+
+async function DatabaseStart() {
+
+  const connection = mysql.createConnection({
+    host     : 'database-1.cvhuek3k2uwy.us-east-2.rds.amazonaws.com',
+    user     : 'spotforca',
+    password : '12345',
+    database : 'spotforca'
+  });
+
+  connection.connect( err => {
+
+    if (err)
+      throw err;
+
+    global.database = connection;
+
+    return;
+
+  });
 
 }
 
