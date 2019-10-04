@@ -8,7 +8,7 @@ module.exports = [
   {
     path: '/challenges/{id}/check',
     method: 'PUT',
-    handler: () => { },
+    handler: challengeHandler.checkAnswer,
     options: {
       description: 'verifica se a resposta enviada é a correta',
       validate: {

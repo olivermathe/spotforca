@@ -64,3 +64,34 @@ exports.createNewChallenge = (request, h) => {
   }
 
 };
+
+exports.checkAnswer = (request, h) => {
+
+  try {
+    
+    const challengeId = request.params.id;
+    const answerId = request.payload.answerId;
+
+    const challenge = challenges.find(c => c.id === challengeId);
+
+    if (!challenge)
+      throw new Error('Challenge not found');
+
+    const answer = challenge.answers.find(a => a.id === answerId);
+
+    if (!answer)
+      throw new Error('Answer not found')
+
+    const response = { right: answer.right };
+
+    return response;
+
+  } catch (error) {
+
+    console.error(error);
+
+    throw error;
+    
+  }
+
+}
