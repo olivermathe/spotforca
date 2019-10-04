@@ -71,17 +71,17 @@ CREATE UNIQUE INDEX `id_UNIQUE` ON `spotforca`.`rounds` (`id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `spotforca`.`chalenges`
+-- Table `spotforca`.`challenges`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `spotforca`.`chalenges` ;
+DROP TABLE IF EXISTS `spotforca`.`challenges` ;
 
-CREATE TABLE IF NOT EXISTS `spotforca`.`chalenges` (
+CREATE TABLE IF NOT EXISTS `spotforca`.`challenges` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(100) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `id_UNIQUE` ON `spotforca`.`chalenges` (`id` ASC);
+CREATE UNIQUE INDEX `id_UNIQUE` ON `spotforca`.`challenges` (`id` ASC);
 
 
 -- -----------------------------------------------------
@@ -93,18 +93,18 @@ CREATE TABLE IF NOT EXISTS `spotforca`.`answers` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(45) NULL,
   `right` TINYINT(1) NULL DEFAULT 0,
-  `chalenges_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`, `chalenges_id`),
-  CONSTRAINT `fk_answers_chalenges1`
-    FOREIGN KEY (`chalenges_id`)
-    REFERENCES `spotforca`.`chalenges` (`id`)
+  `challenges_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`, `challenges_id`),
+  CONSTRAINT `fk_answers_challenges1`
+    FOREIGN KEY (`challenges_id`)
+    REFERENCES `spotforca`.`challenges` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `id_UNIQUE` ON `spotforca`.`answers` (`id` ASC);
 
-CREATE INDEX `fk_answers_chalenges1_idx` ON `spotforca`.`answers` (`chalenges_id` ASC);
+CREATE INDEX `fk_answers_challenges1_idx` ON `spotforca`.`answers` (`challenges_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -152,12 +152,12 @@ COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `spotforca`.`chalenges`
+-- Data for table `spotforca`.`challenges`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `spotforca`;
-INSERT INTO `spotforca`.`chalenges` (`id`, `value`) VALUES (1, 'O ultimo albun de Guns n\' roses foi no ano de 1993?');
-INSERT INTO `spotforca`.`chalenges` (`id`, `value`) VALUES (2, 'Luan Santana tem 13 albuns no total?');
+INSERT INTO `spotforca`.`challenges` (`id`, `value`) VALUES (1, 'O ultimo albun de Guns n\' roses foi no ano de 1993?');
+INSERT INTO `spotforca`.`challenges` (`id`, `value`) VALUES (2, 'Luan Santana tem 13 albuns no total?');
 
 COMMIT;
 
@@ -167,10 +167,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `spotforca`;
-INSERT INTO `spotforca`.`answers` (`id`, `value`, `right`, `chalenges_id`) VALUES (1, 'Sim', false, 1);
-INSERT INTO `spotforca`.`answers` (`id`, `value`, `right`, `chalenges_id`) VALUES (2, 'Não', true, 1);
-INSERT INTO `spotforca`.`answers` (`id`, `value`, `right`, `chalenges_id`) VALUES (3, 'Sim', true, 2);
-INSERT INTO `spotforca`.`answers` (`id`, `value`, `right`, `chalenges_id`) VALUES (4, 'Não', false, 2);
+INSERT INTO `spotforca`.`answers` (`id`, `value`, `right`, `challenges_id`) VALUES (1, 'Sim', false, 1);
+INSERT INTO `spotforca`.`answers` (`id`, `value`, `right`, `challenges_id`) VALUES (2, 'Não', true, 1);
+INSERT INTO `spotforca`.`answers` (`id`, `value`, `right`, `challenges_id`) VALUES (3, 'Sim', true, 2);
+INSERT INTO `spotforca`.`answers` (`id`, `value`, `right`, `challenges_id`) VALUES (4, 'Não', false, 2);
 
 COMMIT;
 
