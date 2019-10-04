@@ -1,8 +1,7 @@
 const Uuid = require('uuid/v4');
-const { getRandomInt } = require('../shared/utils')
-const { credencials } = require('../mocks')
+const { credencialModel } = require('../models');
 
-exports.login = (request, h) => {
+exports.login = async (request, h) => {
 
   try {
 
@@ -11,19 +10,19 @@ exports.login = (request, h) => {
     if (payload.user !== 'admin' || payload.pass !== '@dmin321')
       return h.response().code(401);
 
-    const actualCredencialIdx = credencials.findIndex(credential => credential.isValid && credential.userId === 1);
+    const actualCredencial = await credencialModel.findCurrent();
 
-    if (actualCredencialIdx !== -1)
-      credencials[actualCredencialIdx].isValid = false;
+    if (actualCredencial)
+      await credencialModel.setToInvalid(actualCredencial.id);
+
+    const authorization = Uuid();
 
     const newCredencial = {
-      id: getRandomInt(1, 100),
+      id: await credencialModel.create(authorization),
       userId: 1,
-      authorization: Uuid(),
+      authorization,
       isValid: true
     }
-
-    credencials.push(newCredencial)
 
     return h.response().header('Authorization', newCredencial.authorization).code(204);
 

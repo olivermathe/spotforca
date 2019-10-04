@@ -2,5 +2,6 @@ module.exports = {
     categoryModel: require('./category'),
     wordModel: require('./word'),
     challengeModel: require('./challenge'),
-    answerModel: require('./answer')
+    answerModel: require('./answer'),
+    credencialModel: require('./credencial')
 }
