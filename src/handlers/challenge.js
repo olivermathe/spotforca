@@ -1,13 +1,15 @@
-const { challenges } = require('../mocks');
+let { challenges } = require('../mocks');
 const { getRandomInt } = require('../shared/utils');
 
 exports.getRandomChallenge = (request, h) => {
 
   try {
 
+    challenges = require('../mocks/challenge');
+
     const randomIndex = getRandomInt(0, challenges.length - 1);
 
-    const challenge = challenges[randomIndex];
+    let challenge = challenges[randomIndex];
 
     challenge.answers = challenge.answers.map(({ id, value }) => ({ id, value }))
 
