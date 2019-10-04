@@ -1,20 +1,15 @@
-const { categories, words } = require('../mocks');
+const { categoryModel, wordModel } = require('../models')
 const { getRandomInt } = require('../shared/utils');
 
-exports.createNewCategory = (request, h) => {
+exports.createNewCategory = async (request, h) => {
 
   try {
 
-    const payload = request.payload;
+    const name = request.payload.name;
 
-    const newCategory = {
-      id: getRandomInt(1, 100),
-      name: payload.name,
-    };
+    const id = await categoryModel.create(name);
 
-    categories.push(newCategory);
-
-    return newCategory;
+    return { id, name };
 
   } catch (error) {
 
@@ -26,11 +21,11 @@ exports.createNewCategory = (request, h) => {
 
 };
 
-exports.getRandomCategoryWord = (request, h) => {
+exports.getRandomCategoryWord = async (request, h) => {
 
   try {
 
-    const wordsCategory = words.filter(word => word.categoryId == request.params.id);
+    const wordsCategory = await wordModel.findByCategory(request.params.id)
 
     if (wordsCategory.length === 0)
       return {};
@@ -54,8 +49,20 @@ exports.getRandomCategoryWord = (request, h) => {
 
 };
 
-exports.getAllCategories = (request, h) => {
+exports.getAllCategories = async (request, h) => {
 
-  return categories;
+  try {
+
+    const cats = await categoryModel.findAll();
+
+    return cats;
+    
+  } catch (error) {
+
+    console.error(error);
+
+    throw error;
+    
+  }
 
 };
