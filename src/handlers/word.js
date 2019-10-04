@@ -1,24 +1,21 @@
-const { words, categories, rounds } = require('../mocks');
-const { getRandomInt } = require('../shared/utils')
+const { categoryModel, wordModel } = require('../models');
 
-exports.createNewWord = (request, h) => {
+exports.createNewWord = async (request, h) => {
 
   try {
 
     const payload = request.payload;
 
-    const categoryIdx = categories.findIndex(category => category.id == payload.categoryId);
+    const category = await categoryModel.findOne(payload.categoryId);
 
-    if (categoryIdx === -1)
+    if (!category)
       throw new Error(`Category ${payload.categoryId} not found`);
 
     const newWord = {
-      id: getRandomInt(1, 100),
+      id: await wordModel.create(payload.name, category.id),
       name: payload.name,
       categoryId: payload.categoryId
     };
-
-    words.push(newWord);
 
     return newWord;
 
@@ -31,14 +28,14 @@ exports.createNewWord = (request, h) => {
 
 }
 
-exports.checkIfHasLetter = (request, h) => {
+exports.checkIfHasLetter = async (request, h) => {
 
   try {
 
     const wordId = request.params.id;
     const payload = request.payload;
 
-    const word = words.find(({ id }) => id == wordId);
+    const word = await wordModel.findOne(wordId);
 
     if (!word)
       throw new Error("Id inválido");

@@ -20,14 +20,14 @@ module.exports = [
         },
         payload: Joi.object({
           name: Joi.string().example('teste').required(),
-          catagoryId: Joi.number().integer().positive().example(12).required()
+          categoryId: Joi.number().integer().positive().example(12).required()
         }).label('POST-word'),
       },
       response: {
         schema: Joi.object({
           id: Joi.number().integer().positive().example(23),
           name: Joi.string().example('teste'),
-          catagoryId: Joi.number().positive().example(12)
+          categoryId: Joi.number().positive().example(12)
         }).label('RES-POST-word'),
       },
       pre: [validateAuthorization]
