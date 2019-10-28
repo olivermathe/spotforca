@@ -54,9 +54,9 @@ async function ServerStart() {
 async function DatabaseStart() {
 
   const connection = mysql.createConnection({
-    host     : 'database-1.cvhuek3k2uwy.us-east-2.rds.amazonaws.com',
-    user     : 'spotforca',
-    password : '12345',
+    host     : 'spotforcar.cvhuek3k2uwy.us-east-2.rds.amazonaws.com',
+    user     : 'admin',
+    password : 'admin123',
     database : 'spotforca'
   });
 

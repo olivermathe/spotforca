@@ -156,7 +156,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `spotforca`;
-INSERT INTO `spotforca`.`challenges` (`id`, `value`) VALUES (1, 'O ultimo albun de Guns n\' roses foi no ano de 1993?');
+INSERT INTO `spotforca`.`challenges` (`id`, `value`) VALUES (1, 'O ultimo albun de Guns n roses foi no ano de 1993?');
 INSERT INTO `spotforca`.`challenges` (`id`, `value`) VALUES (2, 'Luan Santana tem 13 albuns no total?');
 
 COMMIT;
